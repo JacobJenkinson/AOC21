@@ -47,16 +47,15 @@ if __name__ == "__main__":
             new_bingo_board.append(row_numbers)
 
     winning_board = []
-    board_has_won = []
+    winning_board_indexes = []
     for number in bingo_numbers:
         for bingo_index, board in enumerate(bingo_boards):
-            updated_board = update_board(board, number)
-            is_winner = check_if_won(updated_board)
-            if is_winner:
-                winning_board = updated_board
-                print(winning_board)
-                print(number)
-                board_score(winning_board, number)
-            bingo_boards[bingo_index] = updated_board
+            if bingo_index not in winning_board_indexes:
+                updated_board = update_board(board, number)
+                is_winner = check_if_won(updated_board)
+                if is_winner:
+                    winning_board_indexes.append(bingo_index)
+                if len(winning_board_indexes) == len(bingo_boards):
+                    print(board_score(updated_board, number))
 
     print(winning_board)
